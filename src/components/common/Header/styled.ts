@@ -3,6 +3,7 @@ import Constants from "expo-constants";
 
 const statusBarHeight = Constants.statusBarHeight;
 
+
 export const Container = styled.View`
     flex-direction: row;
     width: 100%;

@@ -17,14 +17,14 @@ const Login = () => {
   }
   return (
     <Container>
-      <BackIcon marginLeft={30}/>
+      <BackIcon marginLeft={20}/>
       <Logo source={logo}/>
       <InputContainer>
-        <Input placeholder='Email' placeholderTextColor="white"/>
+        <Input placeholder='Email' placeholderTextColor="#C0C0C1"/>
       </InputContainer>
 
       <InputContainer>
-        <Input placeholder='Senha' placeholderTextColor="white" secureTextEntry={true}/>
+        <Input placeholder='Senha' placeholderTextColor="#C0C0C1" secureTextEntry={true}/>
       </InputContainer>
       <ForgetPassword>Esqueceu sua senha?</ForgetPassword>
       <DefaultButton 
@@ -36,7 +36,7 @@ const Login = () => {
         }}
       />
       <RegisterText onPress={()=>{
-        navigation.navigate("Home");
+        navigation.navigate("Register");
       }}>
         Você ainda não tem conta? <Bold>Registre-se aqui!</Bold> 
       </RegisterText>
