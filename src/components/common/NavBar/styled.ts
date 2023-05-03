@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 import Constants from "expo-constants";
 
 const plataform = Constants.platform;
-console.log(!plataform?.ios)
+
 
 
 export const Container = styled.View`
