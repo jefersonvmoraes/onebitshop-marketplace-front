@@ -7,15 +7,21 @@ import Home from "../screens/Home";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
 import Search from "../screens/Search";
+import UserProfile from "../screens/UserProfile";
 
-const Stack = createNativeStackNavigator();
 
-type PropsNavigationStack = {
+
+export type PropsNavigationStack = {
     Home: undefined;
     Login: undefined;
     Register: undefined;
-    Search: undefined;
+    Search: {
+        query: string;
+    };
+    UserProfile: undefined;
 };
+
+const Stack = createNativeStackNavigator<PropsNavigationStack>();
 
 export type PropsStack = NativeStackNavigationProp<PropsNavigationStack>;
 
@@ -27,10 +33,11 @@ const Routes = () => {
                         headerShown: false,
                     }}
             >
-                <Stack.Screen name="Search" component={Search}/>
                 <Stack.Screen name="Home" component={Home}/>
+                <Stack.Screen name="Search" component={Search}/>
                 <Stack.Screen name="Login" component={Login}/>
                 <Stack.Screen name="Register" component={Register}/>
+                <Stack.Screen name="UserProfile" component={UserProfile}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
