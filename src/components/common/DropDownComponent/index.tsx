@@ -3,17 +3,7 @@ import { ArrowIcon, DropDown, DropDownContainer } from './styled'
 
 const arrowDownIcon = require("../../../../assets/icons/arrow-down.png");
 
-const Data = [
-  {
-    value: "Teste 1",
-  },
-  {
-    value: "Teste 2",
-  },
-  {
-    value: "Teste 3",
-  },
-];
+
 interface DropDownProps {
   data: Object[];
   placeholder: string;
