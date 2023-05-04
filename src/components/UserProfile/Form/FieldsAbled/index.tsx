@@ -3,11 +3,19 @@ import React, { useState } from 'react'
 import { InputContainer } from '../styled'
 import { AddressText, Input } from './styled'
 import DefaultButton from '../../../common/DefaultButton'
+import DropDownComponent from '../../../common/DropDownComponent'
 
 const FieldsAbleds = () => {
   const [name, setName] = useState("Jeferson Moraes");
   const [email, setEmail] = useState("email@hotmail.com");
   const [phone, setPhone] = useState("(99) 99999-9999");
+
+  const [select, setSelect] = useState("");
+
+  const Data = [
+    {value: 'Endereço de teste', disabled: true},
+    {value: 'Endereço de teste', disabled: true},
+  ];
   return (
     <>
       <InputContainer>
@@ -34,11 +42,12 @@ const FieldsAbleds = () => {
           }}
         />
       </InputContainer>
-      <InputContainer>
-        <Input 
-          value="DROPDOWN"
-        />
-      </InputContainer>
+      
+      <DropDownComponent
+        data={Data}
+        placeholder="Seus endereços"
+        setSelected={setSelect}
+      />
       <InputContainer>
         <Input 
           placeholder='Senha'
