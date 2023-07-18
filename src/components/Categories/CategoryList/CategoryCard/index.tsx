@@ -9,7 +9,7 @@ interface ProductProps {
   product: Product;
 }
 
-const CategorieCard = ({product}: ProductProps) => {
+const CategoryCard = ({product}: ProductProps) => {
   return (
     <Container>
       <Image source={{ uri: product.productImage}}/>
@@ -29,4 +29,4 @@ const CategorieCard = ({product}: ProductProps) => {
   )
 }
 
-export default CategorieCard
+export default CategoryCard
