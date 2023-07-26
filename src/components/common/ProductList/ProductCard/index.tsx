@@ -2,6 +2,8 @@ import { Alert } from 'react-native'
 import React from 'react'
 import { Container, InfoLikeContainer, LikeButton, LikeIcon, ProductImage, ProductInfoContainer, ProductPrice, ProductPriceTitleContainer, ProductTitle, PublishedText, SellerInfoContainer, SellerName } from './styled'
 import { ProductType } from '..';
+import { useNavigation } from '@react-navigation/native';
+import { PropsStack } from '../../../../routes';
 
 const like = require("../../../../../assets/icons/like.png");
 const liked = require("../../../../../assets/icons/liked.png");
@@ -11,9 +13,10 @@ interface DataProps {
 }
 
 const ProductCard = ({data}: DataProps) => {
+  const navigation = useNavigation<PropsStack>()
   return (
     <Container activeOpacity={0.85} onPress={()=>{
-      Alert.alert("Navegaçao para o produto")
+      navigation.navigate("Product")
     }}>
       <ProductImage source={{uri: data.productImage}}/>
       <ProductInfoContainer>
