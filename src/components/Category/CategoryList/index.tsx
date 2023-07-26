@@ -1,6 +1,7 @@
 import { View, Text, FlatList, ListRenderItem } from 'react-native'
 import React from 'react'
 import { Product } from '../../../screens/Categories'
+import CategoryCard from './CategoryCard';
 
 interface Props {
   products: Product[];
@@ -8,11 +9,9 @@ interface Props {
 
 const CategoryList = ({products}: Props) => {
 
-  const renderItem: ListRenderItem<Product> = () =>{
+  const renderItem: ListRenderItem<Product> = ({item}) =>{
     return (
-      <>
-        <View></View> 
-      </>
+        <CategoryCard product={item}/>
     );
   };
   
