@@ -1,6 +1,6 @@
-import { View, Text } from 'react-native'
+
 import React from 'react'
-import { Container, SubTitle, SubtitleContainer, Title } from './styled'
+import { Button, Container, InfoContainer, InteractionsContainer, Like, Price, Share, SubTitle, SubtitleContainer, Title } from './styled'
 import BackIcon from '../../components/common/BackIcon'
 import Carousel from '../../components/Product/Carousel';
 
@@ -23,6 +23,9 @@ const images = [
   },
 ];
 
+const like = require('../../../assets/icons/like.png');
+const share = require('../../../assets/icons/share.png');
+
 const Product = () => {
   return (
     <Container>
@@ -33,6 +36,17 @@ const Product = () => {
         <SubTitle>Recife, PE</SubTitle>
       </SubtitleContainer>
       <Carousel images={images}/>
+      <InfoContainer>
+        <Price>R$ 2500</Price>
+        <InteractionsContainer>
+          <Button>
+            <Like source={like}/>
+          </Button>
+          <Button>
+            <Share source={share}/>
+          </Button>
+        </InteractionsContainer>
+      </InfoContainer>
     </Container>
   )
 }
