@@ -1,4 +1,6 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react'
+import { PropsStack } from '../../../routes';
 import { Card, Container, Image, InfoContainer, InfoIconContainer, NoAds, Price, PriceTitleContainer, PublishedText, Title, TotalAds, IconButton, Icon } from './styled'
 
 const trashIcon = require("../../../../assets/icons/trash.png");
@@ -20,6 +22,14 @@ interface ProductProps {
 }
 
 const UserAds = ({product, seller}: ProductProps) => {
+  const navigation = useNavigation<PropsStack>()
+  const handleEditProduct = () => {
+    if(!seller) {
+      navigation.navigate("AddProduct");
+    } else {
+      navigation.navigate("Product");
+    }
+  }
   return (
     <Container>
       <TotalAds>Você tem {product.length} anúncios</TotalAds>
@@ -27,7 +37,7 @@ const UserAds = ({product, seller}: ProductProps) => {
       {product.length > 0 ? (
         product.map((product)=>(
 
-          <Card key={product.id} activeOpacity={8.85} onPress={()=>{}}>
+          <Card key={product.id} activeOpacity={8.85} onPress={()=>{handleEditProduct()}}>
             <Image source={{uri: product.productImage}}/>
             <InfoContainer>
               <PriceTitleContainer>

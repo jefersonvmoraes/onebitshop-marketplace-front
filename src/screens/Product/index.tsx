@@ -3,6 +3,9 @@ import React from 'react'
 import { Button, Container, InfoContainer, InteractionsContainer, Like, Price, Share, SubTitle, SubtitleContainer, Title } from './styled'
 import BackIcon from '../../components/common/BackIcon'
 import Carousel from '../../components/Product/Carousel';
+import Description from '../../components/Product/Description';
+import SellerInfo from '../../components/Product/SellerInfo';
+import DefaultButton from '../../components/common/DefaultButton';
 
 const images = [
   {
@@ -27,8 +30,10 @@ const like = require('../../../assets/icons/like.png');
 const share = require('../../../assets/icons/share.png');
 
 const Product = () => {
+
+  const description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat quos neque labore illum porro, beatae cupiditate amet quisquam minima? Asperiores similique eius amet et doloremque iusto sapiente corporis inventore minima quibusdam, reiciendis repellendus voluptas harum delectus laudantium accusantium. Sequi nesciunt odio illum repellat culpa aut nobis quae quam et quibusdam odit voluptatibus laboriosam provident consequatur dolor harum placeat minima, ullam neque ipsa maiores similique adipisci. Architecto esse expedita, fugit accusantium provident numquam quidem, voluptatem vel debitis aliquid quibusdam iure amet."
   return (
-    <Container>
+    <Container contentContainerStyle={{ paddingBottom: 80 }}>
       <BackIcon marginLeft={30}/>
       <Title>Playstation 4 com dois controles</Title>
       <SubtitleContainer>
@@ -47,6 +52,17 @@ const Product = () => {
           </Button>
         </InteractionsContainer>
       </InfoContainer>
+
+      <Description desc={description}/>
+
+      <SellerInfo/>
+
+      <DefaultButton 
+        buttonText='FALE COM O VENDEDOR' 
+        buttonType='primary'
+        marginVertical={0}
+        buttonHandle={()=>{}}
+      />
     </Container>
   )
 }

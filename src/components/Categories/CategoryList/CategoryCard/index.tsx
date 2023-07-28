@@ -1,7 +1,9 @@
-import { View, Text } from 'react-native'
+
 import React from 'react'
 import { Container, Image, LikeButton, LikeImage, Price, SellerLikeContainer, SellerName, TextContainer, Title } from './styled'
 import { Product } from '../../../../screens/Categories';
+import { useNavigation } from '@react-navigation/native';
+import { PropsStack } from '../../../../routes';
 
 const likeIcon = require('../../../../../assets/icons/like.png')
 
@@ -10,8 +12,9 @@ interface ProductProps {
 }
 
 const CategoryCard = ({product}: ProductProps) => {
+  const navigation = useNavigation<PropsStack>();
   return (
-    <Container>
+    <Container onPress={()=>{ navigation.navigate("Product");}}>
       <Image source={{ uri: product.productImage}}/>
       <TextContainer>
         <Title>{product.title}</Title>
