@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { Button, Container, InfoContainer, InteractionsContainer, Like, Price, Share, SubTitle, SubtitleContainer, Title } from './styled'
+import { Button, Container, DenounceSeller, InfoContainer, InteractionsContainer, Like, Price, Share, SubTitle, SubtitleContainer, Title } from './styled'
 import BackIcon from '../../components/common/BackIcon'
 import Carousel from '../../components/Product/Carousel';
 import Description from '../../components/Product/Description';
@@ -63,6 +63,8 @@ const Product = () => {
         marginVertical={0}
         buttonHandle={()=>{}}
       />
+
+      <DenounceSeller>Denunciar o vendedor</DenounceSeller>
     </Container>
   )
 }
