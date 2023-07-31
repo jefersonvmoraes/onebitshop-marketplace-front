@@ -8,16 +8,16 @@ import { Button, Container, Name, NoRate, SeeProfile, SellerContainer } from './
 const SellerInfo = () => {
   const navigation = useNavigation<PropsStack>()
 
-  const Rate = 3;
+  const Rate = null;
 
   return (
     <Container>
       <SellerContainer>
         <Name>Jeferson Moraes</Name>
-        <Button>
+        <Button onPress={()=>{ navigation.navigate("Feedback")}}>
           {
             !Rate ? (
-              <NoRate>Sem avaliação{'\n'}Avalie clicando aqui !</NoRate> 
+              <NoRate>Sem avaliação{'\n'}Clique e avalie!</NoRate> 
             ) : (
               <AirbnbRating
               selectedColor='#5f96ed'

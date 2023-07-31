@@ -1,8 +1,11 @@
 import React from 'react';
-import { Container, DefaultText, Hr, Name, NamePhoneContainer, Phone, PrincipalInfoContainer } from './styled';
+import { Button, Container, DefaultText, Hr, Name, NamePhoneContainer, Phone, PrincipalInfoContainer } from './styled';
 import { AirbnbRating } from 'react-native-ratings';
+import { useNavigation } from '@react-navigation/native';
+import { PropsStack } from '../../../routes';
 
 const ProfileInfo = () => {
+  const navigation = useNavigation<PropsStack>();
   const Rate = 2;
   return (
     <>
@@ -13,18 +16,22 @@ const ProfileInfo = () => {
             <Phone>(51) 99999-9999</Phone>
           </NamePhoneContainer>
           {!Rate ? (
-            <DefaultText>Sem Avaliações</DefaultText>
+            <DefaultText onPress={()=>{ navigation.navigate("Feedback")}}>
+              Sem Avaliações{'\n'}Clique e avalie!
+            </DefaultText>
             ) : (
-              <AirbnbRating
-                selectedColor='#5f96ed'
-                showRating={false}
-                isDisabled={true}
-                size={16}
-                defaultRating={Rate}
-                starContainerStyle={{
-                  paddingTop: 4,
-                }}
-              />
+              <Button onPress={()=>{ navigation.navigate("Feedback")}}>
+                <AirbnbRating
+                  selectedColor='#5f96ed'
+                  showRating={false}
+                  isDisabled={true}
+                  size={16}
+                  defaultRating={Rate}
+                  starContainerStyle={{
+                    paddingTop: 4,
+                  }}
+                />
+              </Button>
           )}
         </PrincipalInfoContainer>
 
