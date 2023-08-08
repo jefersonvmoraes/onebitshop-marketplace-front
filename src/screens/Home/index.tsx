@@ -5,7 +5,9 @@ import NavBar from "../../components/common/NavBar";
 import ProductList from "../../components/common/ProductList";
 import { Container } from "./styled";
 
+
 const Home = () => {
+
     return (
         <Container>
             <Header/>
