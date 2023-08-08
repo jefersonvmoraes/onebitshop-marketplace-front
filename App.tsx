@@ -3,15 +3,19 @@ import { StatusBar } from 'expo-status-bar';
 
 import { ThemeProvider } from 'styled-components';
 import { myTheme } from './src/styles';
+import ErrorBoundary from './src/components/Error';
+import { AuthContextProvider } from './src/contexts/AuthContext';
 
 export default function App() {
   return (
-    <>
-      <StatusBar style="light"/>
-      <ThemeProvider theme={myTheme}>
-        <Routes/> 
-      </ThemeProvider>
-    </>
+    <ErrorBoundary>
+      <AuthContextProvider>
+        <StatusBar style="light"/>
+        <ThemeProvider theme={myTheme}>
+          <Routes/> 
+        </ThemeProvider>
+      </AuthContextProvider>
+    </ErrorBoundary>
   );
 }
 

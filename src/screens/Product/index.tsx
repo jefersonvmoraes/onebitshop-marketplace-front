@@ -8,6 +8,7 @@ import SellerInfo from '../../components/Product/SellerInfo';
 import DefaultButton from '../../components/common/DefaultButton';
 import { useNavigation } from '@react-navigation/native';
 import { PropsStack } from '../../routes';
+import useAuth from '../../hook/useAuth';
 
 const images = [
   {
@@ -34,6 +35,7 @@ const share = require('../../../assets/icons/share.png');
 const Product = () => {
 
   const navigation = useNavigation<PropsStack>();
+  const { token } = useAuth()
 
   const description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat quos neque labore illum porro, beatae cupiditate amet quisquam minima? Asperiores similique eius amet et doloremque iusto sapiente corporis inventore minima quibusdam, reiciendis repellendus voluptas harum delectus laudantium accusantium. Sequi nesciunt odio illum repellat culpa aut nobis quae quam et quibusdam odit voluptatibus laboriosam provident consequatur dolor harum placeat minima, ullam neque ipsa maiores similique adipisci. Architecto esse expedita, fugit accusantium provident numquam quidem, voluptatem vel debitis aliquid quibusdam iure amet."
   return (
@@ -44,7 +46,7 @@ const Product = () => {
         <SubTitle>Publicado em 10/04/23</SubTitle>
         <SubTitle>Recife, PE</SubTitle>
       </SubtitleContainer>
-      <Carousel images={images}/>
+      {/* <Carousel images={images}/> */}
       <InfoContainer>
         <Price>R$ 2500</Price>
         <InteractionsContainer>
@@ -68,7 +70,15 @@ const Product = () => {
         buttonHandle={()=>{}}
       />
 
-      <DenounceSeller onPress={()=> {navigation.navigate("Denounce")}}>Denunciar o vendedor</DenounceSeller>
+      <DenounceSeller 
+        onPress={()=> {
+          !token 
+            ? navigation.navigate("Login")
+            : navigation.navigate("Denounce")
+        }}
+      >
+        Denunciar o vendedor
+      </DenounceSeller>
     </Container>
   )
 }

@@ -1,15 +1,16 @@
 import { Alert } from 'react-native'
 import React from 'react'
 import { Container, InfoLikeContainer, LikeButton, LikeIcon, ProductImage, ProductInfoContainer, ProductPrice, ProductPriceTitleContainer, ProductTitle, PublishedText, SellerInfoContainer, SellerName } from './styled'
-import { ProductType } from '..';
+
 import { useNavigation } from '@react-navigation/native';
 import { PropsStack } from '../../../../routes';
+import { Product } from '../../../../entities/Product';
 
 const like = require("../../../../../assets/icons/like.png");
 const liked = require("../../../../../assets/icons/liked.png");
 
 interface DataProps {
-  data: ProductType;
+  data: Product;
 }
 
 const ProductCard = ({data}: DataProps) => {
@@ -18,7 +19,7 @@ const ProductCard = ({data}: DataProps) => {
     <Container activeOpacity={0.85} onPress={()=>{
       navigation.navigate("Product")
     }}>
-      <ProductImage source={{uri: data.productImage}}/>
+      {/* <ProductImage source={{uri: data.images[0].url}}/> */}
       <ProductInfoContainer>
         <ProductPriceTitleContainer>
             <ProductPrice>R$ {data.price}</ProductPrice>
@@ -28,19 +29,15 @@ const ProductCard = ({data}: DataProps) => {
         <InfoLikeContainer>
             <SellerInfoContainer>
                 <PublishedText>Publicado em {data.publishedData} por:</PublishedText>
-                <SellerName>{data.SellerName}</SellerName>
+                {/* <SellerName>{data.seller.name}</SellerName> */}
             </SellerInfoContainer>
-            {!data.liked ? (
+  
                 <LikeButton onPress={()=> {
                     Alert.alert("Voce deu Like")
                 }}>
                     <LikeIcon source={like}/>
                 </LikeButton>
-            ) : (
-                <LikeButton>
-                    <LikeIcon source={liked}/>
-                </LikeButton>
-            )}
+
 
         </InfoLikeContainer>
       </ProductInfoContainer>

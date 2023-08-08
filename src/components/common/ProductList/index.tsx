@@ -1,17 +1,10 @@
 import React from 'react'
 import { FlatList, ListRenderItem } from 'react-native';
 import ProductCard from './ProductCard';
+import { Product } from '../../../entities/Product';
 
 
-export interface ProductType {
-    _id: string;
-    productImage: string;
-    price: string;
-    name: string;
-    publishedData: string;
-    SellerName: string;
-    liked: boolean;
-}
+
 const DATA = [
     {
       _id: "1",
@@ -67,13 +60,14 @@ const DATA = [
 
 const ProductList = () => {
 
-    const renderItem : ListRenderItem<ProductType> = ({item}) =>(
+    const renderItem : ListRenderItem<Product> = ({item}) =>(
         <ProductCard data={item}/>
     )
   return (
     <FlatList
+        //@ts-ignore 
         data={DATA}
-        keyExtractor={(item: ProductType)=> item._id}
+        keyExtractor={(item: Product)=> item._id}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom: 80}}

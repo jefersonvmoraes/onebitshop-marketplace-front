@@ -1,7 +1,8 @@
 import React from 'react'
 import { Alert } from 'react-native'
-import { Address } from '..'
+
 import { Container, ContentTxt, DeleteBtn, DeleteIcon } from './styled'
+import { Address } from '../../../entities/User'
 
 const deleteIcon = require("../../../../assets/icons/trash.png")
 

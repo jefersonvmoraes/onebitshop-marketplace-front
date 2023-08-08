@@ -6,17 +6,9 @@ import { FlatList, ListRenderItem,} from 'react-native';
 import AddressCard from './AddressCard';
 import { useNavigation } from '@react-navigation/native';
 import { PropsStack } from '../../routes';
+import { Address } from '../../entities/User';
 
-export interface Address {
-  _id: string;
-  street: string;
-  number: string;
-  complement: string;
-  district: string;
-  city: string;
-  state: string;
-  cep: string;
-}
+
 
 const Data = [
   {

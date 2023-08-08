@@ -4,14 +4,9 @@ import { Container } from './styled'
 import DefaultTitle from '../../components/common/DefaultTitle'
 import NavBar from '../../components/common/NavBar'
 import CategoryList from '../../components/Categories/CategoryList'
+import { Product } from '../../entities/Product'
 
- export interface Product {
-  id: string;
-  productImage: string;
-  price: string;
-  title: string;
-  publishedData: string;
-}
+
 
 export interface Categorie {
   categorie: {
@@ -121,7 +116,7 @@ const Categories = () => {
     <>
       <Container contentContainerStyle={{paddingBottom: 150}}>
         <DefaultTitle title="TODAS AS CATEGORIAS" fontSize={20}/>
-
+        {/* @ts-ignore */}
         {Data.map(({categorie}: Categorie)=>(
           <CategoryList key={categorie._id} categorie={categorie}/>
         ))}
