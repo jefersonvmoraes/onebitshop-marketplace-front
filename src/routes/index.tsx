@@ -33,7 +33,9 @@ export type PropsNavigationStack = {
     };
     UserProfile: undefined;
     SellerProfile: undefined;
-    AllAddress: undefined;
+    AllAddress: {
+        newAddress: boolean;
+    };
     AddAddress: undefined;
     AddProduct: undefined;
     Categories: undefined;

@@ -33,7 +33,7 @@ const UserAds = ({product, seller}: ProductProps) => {
         product.map((product)=>(
 
           <Card key={product._id} activeOpacity={8.85} onPress={()=>{handleEditProduct()}}>
-            <Image source={{uri: product.images[0].url}}/>
+            {/* <Image source={{uri: product.images[0].url}}/> */}
             <InfoContainer>
               <PriceTitleContainer>
                 <Price>R$ {product.price}</Price>

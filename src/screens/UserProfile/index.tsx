@@ -65,9 +65,9 @@ const UserProfile = () => {
         />
         <ProfileInfo/>
         <Form/>
-        <AddressText onPress={()=>{navigation.navigate("AllAddress")}}>Gerenciar Endereços</AddressText>
+        <AddressText onPress={()=>{navigation.navigate("AllAddress", { newAddress: false, })}}>Gerenciar Endereços</AddressText>
 
-        <UserAds seller={false} product={Data}/>
+        {/* <UserAds seller={false} product={Data}/> */}
         <LogOutBtn onPress={()=>{}}>
           <LogOutText>Sai da sua conta</LogOutText>
         </LogOutBtn>

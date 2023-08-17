@@ -2,18 +2,62 @@ import React, {useState} from 'react'
 import { Container, Input, InputContainer, InputMask } from './styled'
 import DefaultTitle from '../../components/common/DefaultTitle'
 import DefaultButton from '../../components/common/DefaultButton'
+import axios from 'axios'
+import { Alert } from 'react-native'
+import addressService from '../../services/addressService'
+import { useNavigation } from '@react-navigation/native'
+import { PropsStack } from '../../routes'
 
 const AddAddress = () => {
 
+  const navigation = useNavigation<PropsStack>();
   const [fields, setFields] = useState({
-    cep: "",
     street: "",
     number: "",
     complement: "",
     district: "",
     city: "",
     state: "",
+    cep: "",
   });
+
+  const hendleGetAddress = async () => {
+    const { data } = await axios.get(
+      `https://viacep.com.br/ws/${fields.cep}/json/`
+    );
+
+    setFields({
+      ...fields,
+      street: data.logradouro,
+      state: data.uf,
+      city: data.localidade,
+      district: data.bairro,
+    });
+  };
+
+  const handleAddAddres = async () => {
+    if(fields.cep.length < 8){
+      Alert.alert("Você precisa preencher o seu CEP!");
+
+      return;
+    } else if (
+      !fields.city ||
+      !fields.district ||
+      !fields.number ||
+      !fields.state ||
+      !fields.street
+    ){
+      Alert.alert("Algum de seus campos obrigatórios está vazio!");
+      return;
+    }
+
+    const params = fields;
+    const data = await addressService.addAddress(params);
+
+    if(data.status === 201){
+      navigation.navigate("AllAddress",{ newAddress: true });
+    }
+  }
 
   return (
     <Container contentContainerStyle={{paddingBottom: 400}}>
@@ -100,7 +144,7 @@ const AddAddress = () => {
       </InputContainer>
 
       <DefaultButton 
-        buttonHandle={()=>{}}
+        buttonHandle={handleAddAddres}
         buttonText="Cadastrar Endereço"
         buttonType='primary'
         marginVertical={30}
