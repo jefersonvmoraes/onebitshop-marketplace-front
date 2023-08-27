@@ -1,21 +1,25 @@
 import React from 'react';
 import { ArrowIconDisabled, DropDownDisabledContainer, DropDrownDisabled, InputDisabled, PlaceholderDisabled } from './styled';
+import { User } from '../../../../entities/User';
 
 const arrowIcon = require("../../../../../assets/icons/arrow-down.png");
 
-const FieldsDisabled = () => {
+interface Props {
+  userInfo: User;
+}
+const FieldsDisabled = ({userInfo}: Props) => {
   return (
     <>
       <InputDisabled>
-        <PlaceholderDisabled>Jeferson Moraes</PlaceholderDisabled>
+        <PlaceholderDisabled>{userInfo.name}</PlaceholderDisabled>
       </InputDisabled>
 
       <InputDisabled>
-        <PlaceholderDisabled>email@hotmail.com</PlaceholderDisabled>
+        <PlaceholderDisabled>{userInfo.email}</PlaceholderDisabled>
       </InputDisabled>
 
       <InputDisabled>
-        <PlaceholderDisabled>(99) 99999-9999</PlaceholderDisabled>
+        <PlaceholderDisabled>{userInfo.phone}</PlaceholderDisabled>
       </InputDisabled>
 
       <DropDownDisabledContainer>

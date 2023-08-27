@@ -3,30 +3,33 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react'
 import { PropsStack } from '../../../../routes';
 
-import { Button, Container, Image, InfoContainer, Like, LikeContainer, Price, PublishedText, Title } from './styled';
+import { Button, Container, Image, InfoContainer, LikeContainer, Price, PublishedText, Title } from './styled';
 import { Product } from '../../../../entities/Product';
+import getDate from '../../../../utils/getDate';
+import Like from '../../../common/Like';
 
 interface Props {
   product: Product;
+  favorite: boolean;
 }
 
 const likeImg = require('../../../../../assets/icons/like.png')
 
 const CategoryCard = (
-  {product}: Props
+  {product, favorite}: Props
 ) => {
   const navigation = useNavigation<PropsStack>()
   return (
-    <Container activeOpacity={0.85} onPress={()=>{navigation.navigate("Product")}}>
+    <Container activeOpacity={0.85} onPress={()=>{navigation.navigate("Product",{
+      ...product,
+    })}}>
       <Image source={{uri: product.images[0].url}}/>
       <InfoContainer>
         <Price>R$ {product.price}</Price>
         <Title numberOfLines={2}>{product.name}</Title>
         <LikeContainer>
-          <PublishedText>Publicado em{'\n'}{product.publishedData}</PublishedText>
-          <Button onPress={()=>{}} activeOpacity={0.85}>
-            <Like source={likeImg}/>
-          </Button>
+          <PublishedText>Publicado em{'\n'}{getDate(product.createdAt)}</PublishedText>
+          <Like favorites={favorite} productId={product._id}/>
 
         </LikeContainer>
       </InfoContainer>

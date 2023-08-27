@@ -1,21 +1,25 @@
 
 import React from 'react'
-import { Container, Image, LikeButton, LikeImage, Price, SellerLikeContainer, SellerName, TextContainer, Title } from './styled'
+import { Container, Image, Price, SellerLikeContainer, SellerName, TextContainer, Title } from './styled'
 
 import { useNavigation } from '@react-navigation/native';
 import { PropsStack } from '../../../../routes';
 import { Product } from '../../../../entities/Product';
+import Like from '../../../common/Like';
 
-const likeIcon = require('../../../../../assets/icons/like.png')
+
 
 interface ProductProps {
   product: Product;
+  favorite: boolean;
 }
 
-const CategoryCard = ({product}: ProductProps) => {
+const CategoryCard = ({product, favorite}: ProductProps) => {
   const navigation = useNavigation<PropsStack>();
   return (
-    <Container onPress={()=>{ navigation.navigate("Product");}}>
+    <Container onPress={()=>{ navigation.navigate("Product",{
+      ...product,
+    });}}>
       <Image source={{ uri: product.images[0].url}}/>
       <TextContainer>
         <Title>{product.name}</Title>
@@ -23,10 +27,7 @@ const CategoryCard = ({product}: ProductProps) => {
 
         <SellerLikeContainer>
           <SellerName>jeferson Moraes</SellerName>
-
-          <LikeButton>
-            <LikeImage source={likeIcon}/>
-          </LikeButton>
+          <Like favorites={favorite} productId={product._id}/>
         </SellerLikeContainer>
       </TextContainer>
     </Container>

@@ -6,7 +6,10 @@ import { PropsStack } from '../../../routes'
 import { Button, Container, Name, NoRate, SeeProfile, SellerContainer } from './styled'
 import useAuth from '../../../hook/useAuth'
 
-const SellerInfo = () => {
+interface Props {
+  name: string;
+}
+const SellerInfo = ({ name }: Props) => {
   const navigation = useNavigation<PropsStack>()
   const { token } = useAuth();
 
@@ -15,7 +18,7 @@ const SellerInfo = () => {
   return (
     <Container>
       <SellerContainer>
-        <Name>Jeferson Moraes</Name>
+        <Name>{name}</Name>
         <Button onPress={()=>{ 
           !token 
             ? navigation.navigate("Login")
@@ -31,9 +34,6 @@ const SellerInfo = () => {
               isDisabled={true}
               size={16}
               defaultRating={Rate}
-              starContainerStyle={{
-                marginLeft: -20,
-              }}
             />
             )
           }

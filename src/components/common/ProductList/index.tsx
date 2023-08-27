@@ -1,76 +1,54 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList, ListRenderItem } from 'react-native';
 import ProductCard from './ProductCard';
 import { Product } from '../../../entities/Product';
+import useAuth from '../../../hook/useAuth';
+import favoriteService from '../../../services/favoriteService';
+
+export interface ProductsListProps {
+  products: Product[];
+  handleGetProducts: Function;
+}
 
 
+const ProductList = ({products, handleGetProducts}: ProductsListProps) => {
 
-const DATA = [
-    {
-      _id: "1",
-      productImage:
-        "https://http2.mlstatic.com/D_NQ_NP_715237-MLA45308505060_032021-O.jpg",
-      price: "2600",
-      name: "Playstation 4 Pro, seminovo",
-      publishedData: "14/02/23",
-      SellerName: "Lucas Queiroga",
-      liked: false,
-    },
-    {
-      _id: "2",
-      productImage:
-        "https://http2.mlstatic.com/D_NQ_NP_715237-MLA45308505060_032021-O.jpg",
-      price: "3600",
-      name: "Playstation 4 Pro, seminovo",
-      publishedData: "14/02/23",
-      SellerName: "Lucas Queiroga",
-      liked: true,
-    },
-    {
-      _id: "3",
-      productImage:
-        "https://http2.mlstatic.com/D_NQ_NP_715237-MLA45308505060_032021-O.jpg",
-      price: "3600",
-      name: "Playstation 4 Pro, seminovo",
-      publishedData: "14/02/23",
-      SellerName: "Lucas Queiroga",
-      liked: false,
-    },
-    {
-      _id: "4",
-      productImage:
-        "https://http2.mlstatic.com/D_NQ_NP_715237-MLA45308505060_032021-O.jpg",
-      price: "3600",
-      name: "Playstation 4 Pro, seminovo",
-      publishedData: "14/02/23",
-      SellerName: "Lucas Queiroga",
-      liked: true,
-    },
-    {
-      _id: "5",
-      productImage:
-        "https://http2.mlstatic.com/D_NQ_NP_715237-MLA45308505060_032021-O.jpg",
-      price: "3600",
-      name: "Playstation 4 Pro, seminovo",
-      publishedData: "14/02/23",
-      SellerName: "Lucas Queiroga",
-      liked: false,
-    },
-  ];
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const {token} = useAuth();
 
-const ProductList = () => {
+  const handleGetFavorites = async () => {
+    if(!token) return;
+    const res = await favoriteService.getFavorites();
 
-    const renderItem : ListRenderItem<Product> = ({item}) =>(
-        <ProductCard data={item}/>
-    )
+    const isliked = res.data.map((val: Product)=> {
+      return val._id;
+    });
+
+    setFavorites(isliked);
+  };
+
+  const isFavorite = (product: Product) => {
+    return !!favorites.find((favorite)=>(product._id === favorite ? true : false))
+  }
+
+  const renderItem : ListRenderItem<Product> = ({item}) =>(
+      <ProductCard data={item} favorite={isFavorite(item)}/>
+  );
+
+  useEffect(()=>{
+    handleGetFavorites();
+  },[]);
+
   return (
     <FlatList
-        //@ts-ignore 
-        data={DATA}
+        data={products}
         keyExtractor={(item: Product)=> item._id}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom: 80}}
+        onEndReached={()=>{
+          handleGetProducts();
+        }}
     />
   )
 }

@@ -7,10 +7,11 @@ const arrowDownIcon = require("../../../../assets/icons/arrow-down.png");
 interface DropDownProps {
   data: Object[];
   placeholder: string;
-  setSelected: React.Dispatch<SetStateAction<string>>
+  setSelected: React.Dispatch<SetStateAction<string>>;
+  saveMethod: string;
 }
 
-const DropDownComponent = ({data, placeholder, setSelected}: DropDownProps) => {
+const DropDownComponent = ({data, placeholder, setSelected, saveMethod,}: DropDownProps) => {
   const noAddress = [{value: 'Sem endereços no momento', disabled: true}];
   const checkedData = data?.length <= 0 ? noAddress : data;
   return (
@@ -19,7 +20,7 @@ const DropDownComponent = ({data, placeholder, setSelected}: DropDownProps) => {
         data={checkedData}
         setSelected={setSelected}
         placeholder={placeholder}
-        save='value'
+        save={saveMethod === 'value' ? "value" : "key"}
         search={false}
         arrowicon={<ArrowIcon source={arrowDownIcon}/>}
       />

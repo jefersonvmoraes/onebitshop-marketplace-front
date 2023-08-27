@@ -3,10 +3,14 @@ import React, { useState } from 'react'
 import { BtnImg, Container, EditBtn, EditBtnContainer } from './styled'
 import FieldsDisabled from './FieldsDisabled'
 import FieldsAbleds from './FieldsAbled'
+import { User } from '../../../entities/User'
 
 const btnImg = require("../../../../assets/icons/edit.png");
 
-const Form = () => {
+interface Props {
+  userInfo: User;
+}
+const Form = ({userInfo}: Props) => {
   const [editable, setEditable] = useState(false);
 
   const handleToggleEditable = () => {
@@ -21,7 +25,7 @@ const Form = () => {
         </EditBtn>
       </EditBtnContainer>
 
-      {!editable ? <FieldsDisabled/> : <FieldsAbleds/>}
+      {!editable ? <FieldsDisabled userInfo={userInfo}/> : <FieldsAbleds userInfo={userInfo}/>}
 
     </Container>
   )

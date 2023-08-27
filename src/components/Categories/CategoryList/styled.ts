@@ -9,6 +9,7 @@ export const Container = styled.View`
 export const TitleContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 10px;
 `;
 
 export const Title = styled.Text`

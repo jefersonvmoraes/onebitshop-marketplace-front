@@ -1,44 +1,35 @@
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AddressText, Container, DeleteAcc, LogOutBtn, LogOutText } from './styled'
 import NavBar from '../../components/common/NavBar'
 import DefaultTitle from '../../components/common/DefaultTitle'
 import ProfileInfo from '../../components/common/ProfileInfo'
 import Form from '../../components/UserSellerProfile/Form'
-import UserAds from '../../components/UserSellerProfile/UserAds'
 import { Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { PropsStack } from '../../routes'
+import useAuth from '../../hook/useAuth'
+import profileService from '../../services/profileService'
+import Loader from '../Loader'
+import UserAds from '../../components/UserSellerProfile/UserAds'
+import { User } from '../../entities/User'
 
-const Data = [
-  {
-    id: "1",
-    productImage:
-      "https://http2.mlstatic.com/D_NQ_NP_715237-MLA45308505060_032021-O.jpg",
-    price: "2600",
-    title: "Playstation 4 novo com 3 jogos acompanhando",
-    publishedData: "14/02/23",
-  },
-  {
-    id: "2",
-    productImage:
-      "https://m.media-amazon.com/images/I/61hJ40qZKKL._AC_SX679_.jpg",
-    price: "2600",
-    title: "Playstation 5 novo com 1 jogo acompanhando",
-    publishedData: "14/02/23",
-  },
-  {
-    id: "3",
-    productImage:
-      "https://http2.mlstatic.com/D_NQ_NP_715237-MLA45308505060_032021-O.jpg",
-    price: "2600",
-    title: "Playstation 4 novo com 2 jogos acompanhando",
-    publishedData: "14/02/23",
-  },
-];
 
 const UserProfile = () => {
-  const navigation = useNavigation<PropsStack>()
+  const navigation = useNavigation<PropsStack>();
+  const [userInfo, setUserInfo] = useState<User>();
+
+  const { logout } = useAuth();
+
+  const handleUserInfos = async () => {
+    const {data} = await profileService.getUserProfile();
+    setUserInfo(data);
+  }
+
+  useEffect(()=>{
+    handleUserInfos();
+  },[])
+
   const handleDeleteAcc = () => {
     Alert.alert(
       "Você tem certeza?", 
@@ -56,6 +47,11 @@ const UserProfile = () => {
       ]
     )
   }
+
+  if(!userInfo){
+    return <Loader/>;
+  }
+
   return (
     <>
       <Container contentContainerStyle={{paddingBottom: 200}}>
@@ -63,12 +59,12 @@ const UserProfile = () => {
           fontSize={20}
           title="MEU PERFIL"
         />
-        <ProfileInfo/>
-        <Form/>
+        <ProfileInfo userInfo={userInfo}/>
+        <Form userInfo={userInfo}/>
         <AddressText onPress={()=>{navigation.navigate("AllAddress", { newAddress: false, })}}>Gerenciar Endereços</AddressText>
 
-        {/* <UserAds seller={false} product={Data}/> */}
-        <LogOutBtn onPress={()=>{}}>
+        <UserAds seller={false} product={userInfo.products}/>
+        <LogOutBtn onPress={logout}>
           <LogOutText>Sai da sua conta</LogOutText>
         </LogOutBtn>
         <DeleteAcc onPress={handleDeleteAcc}>
