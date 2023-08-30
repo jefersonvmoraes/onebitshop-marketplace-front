@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {AdsContainer, Container, DenounceText} from "./styled";
 import DefaultTitle from '../../components/common/DefaultTitle';
 import ProfileInfo from '../../components/common/ProfileInfo';
@@ -7,50 +7,86 @@ import UserAds from '../../components/UserSellerProfile/UserAds';
 import DefaultButton from '../../components/common/DefaultButton';
 import NavBar from '../../components/common/NavBar';
 import { useNavigation } from '@react-navigation/native';
-import { PropsStack } from '../../routes';
+import { PropsNavigationStack, PropsStack } from '../../routes';
 import useAuth from '../../hook/useAuth';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import profileService from '../../services/profileService';
+import Loader from '../Loader';
+import { User } from '../../entities/User';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from 'react-native';
+import chatService from '../../services/chatService';
 
-const Data = [
-  {
-    id: "1",
-    productImage:
-      "https://http2.mlstatic.com/D_NQ_NP_715237-MLA45308505060_032021-O.jpg",
-    price: "2600",
-    title: "Playstation 4 novo com 3 jogos acompanhando",
-    publishedData: "14/02/23",
-  },
-  {
-    id: "2",
-    productImage:
-      "https://m.media-amazon.com/images/I/61hJ40qZKKL._AC_SX679_.jpg",
-    price: "2600",
-    title: "Playstation 5 novo com 1 jogo acompanhando",
-    publishedData: "14/02/23",
-  },
-  {
-    id: "3",
-    productImage:
-      "https://http2.mlstatic.com/D_NQ_NP_715237-MLA45308505060_032021-O.jpg",
-    price: "2600",
-    title: "Playstation 4 novo com 2 jogos acompanhando",
-    publishedData: "14/02/23",
-  },
-];
 
-const SellerProfile = () => {
+type Props = NativeStackScreenProps<PropsNavigationStack, "SellerProfile">;
+
+
+const SellerProfile = ({route}: Props) => {
+  const [loading, setLoading] = useState(true);
+  const [userInfo, setUserInfo ] = useState<User>();
   const navigation = useNavigation<PropsStack>();
   const {token} = useAuth();
+
+  const handleGetSellerInfo = async () => {
+    const data = await profileService.getSellerProfile(route.params);
+    setUserInfo(data.data);
+    setLoading(false);
+  };
+
+
+
+  useEffect(() => {
+    handleGetSellerInfo();
+  }, []);
+
+  if(!userInfo || loading){
+    return <Loader/>
+  };
+
+  const handleChatSeller = async () => {
+    if(userInfo.products.length <= 0){
+      Alert.alert("Esse vendedor não esta vendendo nada!");
+    }
+    const user = await AsyncStorage.getItem("user");
+    const { _id } = JSON.parse(user || "");
+
+    const initialMessage = `Olá, quero saber mais sobre o seu produto, ${userInfo.name}`;
+
+    const params = {
+      product: userInfo.products[0]._id,
+      seller: userInfo._id,
+      initialMessage,
+    };
+
+    const res = await chatService.startChats(params);
+    if(res.status === 201){
+      navigation.navigate("Chat", {
+        product: userInfo.products[0],
+        sellerName: userInfo.name,
+        sellerId: userInfo._id,
+        buyerId: _id,
+        messages: [
+          {
+            content: initialMessage,
+            receiver: userInfo._id,
+            sender: _id,
+          }
+        ],
+      })
+    }
+  };
+  
   return (
     <>
       <Container contentContainerStyle={{paddingBottom: 200}}>
         <DefaultTitle title='PERFIL DO VENDEDOR' fontSize={20}/>
-        <ProfileInfo />
+        <ProfileInfo userInfo={userInfo}/>
         <AdsContainer>
-          <UserAds product={Data} seller={true}/>
+          <UserAds product={userInfo.products} seller={true}/>
         </AdsContainer>
         <DefaultButton 
           buttonText='FALE COM O VENDEDOR' 
-          buttonHandle={()=>{}} 
+          buttonHandle={handleChatSeller} 
           buttonType='primary'
           marginVertical={10}
         />

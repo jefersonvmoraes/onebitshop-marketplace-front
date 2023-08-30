@@ -1,17 +1,22 @@
 import { ListRenderItem, FlatList } from 'react-native'
 import React from 'react'
 import MessageCard from './MessageCard'
+import { Messages } from '../../../entities/Message'
 
-const MessageList = ({messages}: any) => {
+interface Props {
+  messages: Messages[];
+}
+
+const MessageList = ({messages}: Props) => {
   
-  const renderItem: ListRenderItem<any> = ({item}) => (
+  const renderItem: ListRenderItem<Messages> = ({item}) => (
     <MessageCard item={item}/>
   )
   return (
     <FlatList
       data={messages}
       inverted={true}
-      keyExtractor={(item)=> item._id}
+      keyExtractor={(item, index)=> item._id + index.toString()}
       renderItem={renderItem}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ paddingTop: 20 }}

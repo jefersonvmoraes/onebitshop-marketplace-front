@@ -7,6 +7,7 @@ import { Container } from "./styled";
 import { Product } from "../../entities/Product";
 import productService from "../../services/productService";
 import Loader from "../Loader";
+import { useFocusEffect } from "@react-navigation/native";
 
 
 const Home = () => {
@@ -27,9 +28,12 @@ const Home = () => {
         setPage(page + 1);
       };
   
-      useEffect(() => {
-        handleGetProducts();
-      }, [])
+      useFocusEffect(
+        React.useCallback(()=>{
+          handleGetProducts();
+        },[])
+      );
+
 
     return (
         <Container>

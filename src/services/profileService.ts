@@ -2,10 +2,14 @@ import api from "./api";
 import * as SecureStore from "expo-secure-store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-interface UpdateProfile{
+interface UpdateProfile {
   name: string;
   email: string;
   phone: string;
+}
+
+interface SellerProps {
+  sellerId: string;
 }
 
 const profileService = {
@@ -32,7 +36,18 @@ const profileService = {
     });
 
     return res;
-  }
+  },
+  getSellerProfile: async ({sellerId}: SellerProps) =>{
+    const token = await SecureStore.getItemAsync("onebitshop-token");
+
+    const res = await api.get(`/users/${sellerId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return res;
+  },
 };
 
 export default profileService;
